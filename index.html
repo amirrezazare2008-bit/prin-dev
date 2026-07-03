@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRIN - Premium Fashion</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap');
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { 
+            font-family: 'Vazirmatn', sans-serif; 
+            background:#f8fafc; 
+            color:#1e2937; 
+            line-height:1.7; 
+        }
+        
+        header { 
+            background: rgba(15,23,42,0.98); 
+            color:white; 
+            padding:20px 0; 
+            position:fixed; 
+            width:100%; 
+            z-index:1000; 
+            backdrop-filter: blur(12px); 
+        }
+        .container { max-width:1320px; margin:0 auto; padding:0 25px; }
+        
+        .hero { 
+            background: linear-gradient(rgba(15,23,42,0.75), rgba(15,23,42,0.75)), url('https://picsum.photos/id/1015/2000/1200') center/cover; 
+            color:white; 
+            text-align:center; 
+            padding:280px 20px 180px; 
+        }
+        .product-grid { 
+            display:grid; 
+            grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); 
+            gap:32px; 
+            padding:100px 20px; 
+        }
+        .product-card { 
+            background:white; 
+            border-radius:20px; 
+            overflow:hidden; 
+            box-shadow:0 10px 35px rgba(0,0,0,0.08); 
+            transition:all 0.5s cubic-bezier(0.4,0,0.2,1); 
+        }
+        .product-card:hover { 
+            transform:translateY(-22px); 
+            box-shadow:0 30px 60px rgba(59,130,246,0.25); 
+        }
+        .product-img { 
+            width:100%; 
+            height:360px; 
+            object-fit:cover; 
+            transition:transform 0.8s ease; 
+        }
+        .product-card:hover .product-img { transform:scale(1.12); }
+        
+        button { 
+            background:#2563eb; 
+            color:white; 
+            border:none; 
+            padding:16px 32px; 
+            border-radius:12px; 
+            cursor:pointer; 
+            font-weight:600; 
+            transition:0.3s; 
+        }
+        button:hover { background:#1e40af; transform:scale(1.05); }
+        
+        .footer { 
+            background:#0f172a; 
+            color:#cbd5e1; 
+            padding:110px 20px 60px; 
+            text-align:center; 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="font-size:2.8rem; font-weight:700; color:#60a5fa;">PRIN</div>
+            <div style="display:flex; gap:35px; font-size:1.1rem;">
+                <a href="#" onclick="filterCategory('all')" style="color:white; text-decoration:none;">همه</a>
+                <a href="#" onclick="filterCategory('زنانه')" style="color:white; text-decoration:none;">زنانه</a>
+                <a href="#" onclick="filterCategory('مردانه')" style="color:white; text-decoration:none;">مردانه</a>
+                <a href="#" onclick="filterCategory('اسپرت')" style="color:white; text-decoration:none;">اسپرت</a>
+                <a href="#" onclick="filterCategory('کودک')" style="color:white; text-decoration:none;">کودک</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1 style="font-size:5rem; margin-bottom:25px;">PRIN</h1>
+        <p style="font-size:2.1rem;">Premium Fashion for Modern Life</p>
+    </section>
+
+    <section id="products">
+        <div class="container">
+            <h2 style="text-align:center; font-size:2.8rem; margin:100px 0 70px;">۴۰ محصول منتخب</h2>
+            <div id="product-grid" class="product-grid"></div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p style="font-size:2.3rem; margin-bottom:20px;">PRIN</p>
+        <p>ساخته شده توسط امیررضا زارع</p>
+        <p style="margin-top:20px;">جهت ارتباط: <strong>@amirreza-40</strong></p>
+        <p style="margin-top:70px; opacity:0.6;">نمونه کار حرفه‌ای طراحی سایت - ۱۴۰۵</p>
+    </footer>
+
+    <script>
+        const products = [];
+        const cats = ['زنانه', 'مردانه', 'اسپرت', 'کودک'];
+
+        for(let i = 1; i <= 40; i++) {
+            const cat = cats[Math.floor(Math.random()*4)];
+            products.push({
+                name: `${cat} مدل ${i}`,
+                price: (280000 + Math.floor(Math.random()*1600000)).toLocaleString('fa-IR'),
+                category: cat,
+                img: `https://picsum.photos/id/${60 + i}/300/360`
+            });
+        }
+
+        function renderProducts(filtered) {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+            filtered.forEach(p => {
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <img src="${p.img}" class="product-img">
+                        <div style="padding:28px; text-align:center;">
+                            <h3>${p.name}</h3>
+                            <p style="font-size:1.5rem; font-weight:700; color:#1e40af; margin:18px 0;">${p.price} تومان</p>
+                            <button onclick="alert('به سبد خرید اضافه شد ✅')">افزودن به سبد</button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function filterCategory(cat) {
+            if(cat === 'all') renderProducts(products);
+            else renderProducts(products.filter(p => p.category === cat));
+        }
+
+        renderProducts(products);
+    </script>
+</body>
+</html>
