@@ -3,49 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="پرین - پوشاک لوکس برای سبک زندگی مدرن">
     <title>پرین - Premium Fashion</title>
     <link rel="icon" href="PERIN_Logo.png" type="image/png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Vazirmatn:wght@400;500;700&display=swap');
         body { font-family: 'Vazirmatn', sans-serif; margin:0; background:#f8f9fa; }
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://picsum.photos/id/1015/1920/1080') center/cover;
+            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://picsum.photos/id/1015/1920/1080') center/cover;
             height:100vh; display:flex; align-items:center; justify-content:center; color:white; text-align:center;
         }
-        .hero-content { animation: fadeIn 2.2s ease; }
-        @keyframes fadeIn { from { opacity:0; transform:translateY(50px); } to { opacity:1; transform:translateY(0); } }
-        .logo { height:150px; margin-bottom:20px; }
-        .section { padding:120px 20px; }
+        .hero-content { animation: fadeIn 2.5s ease; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(60px); } to { opacity:1; transform:translateY(0); } }
+        .logo { height:160px; margin-bottom:25px; }
+        .section { padding:130px 20px; }
         .product-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:40px; max-width:1400px; margin:auto; }
-        .product-card { 
-            background:white; border-radius:24px; overflow:hidden; box-shadow:0 15px 40px rgba(0,0,0,0.12);
-            transition:all 0.5s cubic-bezier(0.4,0,0.2,1);
-        }
+        .product-card { background:white; border-radius:24px; overflow:hidden; box-shadow:0 15px 40px rgba(0,0,0,0.1); transition:all 0.5s; }
         .product-card:hover { transform:scale(1.08); box-shadow:0 30px 70px rgba(0,0,0,0.25); }
-        .product-img { width:100%; height:380px; object-fit:cover; transition:0.6s; }
-        .product-card:hover .product-img { transform:scale(1.12); }
-        button { 
-            background:#1e40af; color:white; border:none; padding:18px 45px; border-radius:50px; 
-            font-size:1.2rem; cursor:pointer; transition:0.4s; font-weight:600;
-        }
+        button { background:#1e40af; color:white; border:none; padding:18px 45px; border-radius:50px; font-size:1.2rem; cursor:pointer; transition:0.4s; }
         button:hover { background:#1e3a8a; transform:scale(1.12); }
         footer { background:#0f172a; color:#cbd5e1; padding:100px 20px 60px; text-align:center; }
     </style>
 </head>
 <body>
-    <!-- Loading -->
-    <div id="loading" style="position:fixed; top:0; left:0; width:100%; height:100%; background:white; display:flex; align-items:center; justify-content:center; z-index:9999;">
-        <img src="PERIN_Logo.png" style="height:140px; animation: pulse 1.8s infinite;">
-    </div>
-
     <!-- Hero -->
     <section class="hero">
         <div class="hero-content">
             <img src="PERIN_Logo.png" class="logo" alt="پرین">
-            <h1 style="font-family:'Playfair Display',serif; font-size:5.2rem; margin:15px 0;">PERIN</h1>
-            <p style="font-size:1.8rem; margin-bottom:10px;">Premium Fashion</p>
-            <p style="font-size:1.4rem; max-width:700px; margin:0 auto 40px;">Wear Confidence • Designed for Modern Lifestyle</p>
+            <h1 style="font-family:'Playfair Display',serif; font-size:5.5rem; margin:10px 0;">PERIN</h1>
+            <p style="font-size:1.9rem; margin:10px 0;">Premium Fashion</p>
+            <p style="font-size:1.5rem; max-width:700px; margin:0 auto 50px;">Designed for Modern Lifestyle</p>
             <button onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
         </div>
     </section>
@@ -56,37 +42,20 @@
             <div class="product-card">
                 <img src="https://picsum.photos/id/1015/600/380" class="product-img" alt="تی شرت">
                 <div style="padding:30px; text-align:center;">
-                    <h3 style="font-size:1.6rem;">تی‌شرت مشکی premium</h3>
+                    <h3>تی‌شرت مشکی premium</h3>
                     <p style="color:#1e40af; font-size:1.5rem;">۳۲۰٬۰۰۰ تومان</p>
                     <button>View Product</button>
                 </div>
             </div>
-            <!-- محصولات دیگر -->
         </div>
-    </section>
-
-    <!-- About -->
-    <section class="section" style="background:#f1f5f9; text-align:center;">
-        <img src="PERIN_Logo.png" style="height:120px; margin-bottom:40px;">
-        <h2 style="font-family:'Playfair Display',serif; font-size:3.2rem;">Crafted for those who appreciate timeless elegance</h2>
-        <p style="max-width:800px; margin:40px auto; font-size:1.25rem; line-height:1.9;">
-            پرین نماد مد لوکس و مدرن است. ما لباس‌هایی را انتخاب می‌کنیم که نه تنها زیبا، بلکه با کیفیت و راحت باشند. 
-            هر محصول با دقت و عشق انتخاب شده تا شما احساس خاص بودن کنید.
-        </p>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p style="font-size:1.6rem;">Instagram • Facebook • Pinterest • TikTok</p>
-        <p>Email: info@perin.shop | ۰۹۰۵۰۸۹۱۸۱۷</p>
+        <p style="font-size:1.6rem;">Instagram • Telegram • Facebook • Pinterest</p>
+        <p>Email: info@perin.shop | Phone: ۰۹۰۵۰۸۹۱۸۱۷</p>
         <p>© 2026 PERIN. All Rights Reserved.</p>
         <p>Designed & Developed by Amirreza Zare</p>
     </footer>
-
-    <script>
-        setTimeout(() => {
-            document.getElementById('loading').style.display = 'none';
-        }, 1600);
-    </script>
 </body>
 </html>
