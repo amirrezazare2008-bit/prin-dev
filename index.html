@@ -2,60 +2,274 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>پرین - Premium Fashion</title>
     <link rel="icon" href="PERIN_Logo.png" type="image/png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Vazirmatn:wght@400;500;700&display=swap');
-        body { font-family: 'Vazirmatn', sans-serif; margin:0; background:#f8f9fa; }
+        
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Vazirmatn',sans-serif; background:#f8f9fa; color:#222; line-height:1.6; }
+        
+        header { background:#0f172a; color:white; padding:14px 0; position:sticky; top:0; z-index:100; }
+        .nav { max-width:1300px; margin:auto; padding:0 15px; display:flex; justify-content:space-between; align-items:center; gap:15px; flex-wrap:wrap; }
+        .logo-text { font-size:1.8rem; font-weight:700; color:#60a5fa; }
+        .nav-links { display:flex; gap:18px; align-items:center; }
+        .nav-links a, .nav-links span { color:white; text-decoration:none; cursor:pointer; font-size:0.95rem; }
+        .cart-btn { background:#1e40af; padding:8px 16px; border-radius:50px; }
+
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://picsum.photos/id/1015/1920/1080') center/cover;
-            height:100vh; display:flex; align-items:center; justify-content:center; color:white; text-align:center;
+            background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('https://picsum.photos/id/1015/1920/1080') center/cover;
+            min-height:85vh; display:flex; align-items:center; justify-content:center; color:white; text-align:center; padding:20px;
         }
-        .hero-content { animation: fadeIn 2.5s ease; }
-        @keyframes fadeIn { from { opacity:0; transform:translateY(60px); } to { opacity:1; transform:translateY(0); } }
-        .logo { height:160px; margin-bottom:25px; }
-        .section { padding:130px 20px; }
-        .product-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:40px; max-width:1400px; margin:auto; }
-        .product-card { background:white; border-radius:24px; overflow:hidden; box-shadow:0 15px 40px rgba(0,0,0,0.1); transition:all 0.5s; }
-        .product-card:hover { transform:scale(1.08); box-shadow:0 30px 70px rgba(0,0,0,0.25); }
-        button { background:#1e40af; color:white; border:none; padding:18px 45px; border-radius:50px; font-size:1.2rem; cursor:pointer; transition:0.4s; }
-        button:hover { background:#1e3a8a; transform:scale(1.12); }
-        footer { background:#0f172a; color:#cbd5e1; padding:100px 20px 60px; text-align:center; }
+        .hero h1 { font-family:'Playfair Display',serif; font-size:3.8rem; margin:10px 0; }
+        .btn { background:#1e40af; color:white; border:none; padding:14px 32px; border-radius:50px; font-size:1.05rem; cursor:pointer; transition:0.3s; }
+        .btn:hover { background:#1e3a8a; transform:scale(1.05); }
+
+        .filters { background:white; padding:20px 15px; border-bottom:1px solid #e5e7eb; }
+        .filters-inner { max-width:1300px; margin:auto; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+        .filters input, .filters select { padding:12px 15px; border:1px solid #d1d5db; border-radius:10px; font-size:0.95rem; min-width:140px; }
+
+        .section { padding:60px 15px; }
+        .section-title { text-align:center; font-family:'Playfair Display',serif; font-size:2.2rem; margin-bottom:35px; }
+        .product-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:25px; max-width:1300px; margin:auto; }
+        .product-card { background:white; border-radius:18px; overflow:hidden; box-shadow:0 8px 25px rgba(0,0,0,0.08); transition:0.35s; }
+        .product-card:hover { transform:translateY(-8px); box-shadow:0 18px 40px rgba(0,0,0,0.15); }
+        .product-img { width:100%; height:300px; object-fit:cover; }
+        .product-info { padding:18px; text-align:center; }
+        .price { color:#1e40af; font-size:1.3rem; font-weight:700; margin:10px 0 15px; }
+
+        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:2000; align-items:center; justify-content:center; padding:15px; }
+        .modal-content { background:white; border-radius:20px; padding:25px; width:100%; max-width:480px; max-height:90vh; overflow-y:auto; }
+        .modal h2 { margin-bottom:20px; text-align:center; }
+        .modal input { width:100%; padding:13px; margin-bottom:12px; border:1px solid #d1d5db; border-radius:10px; font-size:1rem; }
+        .cart-item { display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #eee; align-items:center; gap:10px; }
+        .remove-btn { background:#ef4444; color:white; border:none; padding:5px 12px; border-radius:8px; cursor:pointer; font-size:0.85rem; }
+
+        footer { background:#0f172a; color:#cbd5e1; padding:50px 15px 30px; text-align:center; }
+        footer p { margin:8px 0; font-size:0.95rem; }
+
+        @media (max-width:768px) {
+            .nav { flex-direction:column; gap:12px; }
+            .nav-links { width:100%; justify-content:center; flex-wrap:wrap; gap:12px; }
+            .hero h1 { font-size:2.6rem; }
+            .hero p { font-size:1.1rem; }
+            .btn { width:100%; max-width:300px; padding:15px; }
+            .filters-inner { flex-direction:column; }
+            .filters input, .filters select { width:100%; }
+            .product-grid { grid-template-columns:1fr; gap:20px; }
+            .product-img { height:280px; }
+            .section { padding:45px 12px; }
+            .section-title { font-size:1.8rem; }
+            .modal-content { padding:20px; }
+        }
     </style>
 </head>
 <body>
-    <!-- Hero -->
-    <section class="hero">
-        <div class="hero-content">
-            <img src="PERIN_Logo.png" class="logo" alt="پرین">
-            <h1 style="font-family:'Playfair Display',serif; font-size:5.5rem; margin:10px 0;">PERIN</h1>
-            <p style="font-size:1.9rem; margin:10px 0;">Premium Fashion</p>
-            <p style="font-size:1.5rem; max-width:700px; margin:0 auto 50px;">Designed for Modern Lifestyle</p>
-            <button onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
-        </div>
-    </section>
 
-    <!-- محصولات -->
-    <section id="products" class="section" style="background:white;">
-        <div class="product-grid">
-            <div class="product-card">
-                <img src="https://picsum.photos/id/1015/600/380" class="product-img" alt="تی شرت">
-                <div style="padding:30px; text-align:center;">
-                    <h3>تی‌شرت مشکی premium</h3>
-                    <p style="color:#1e40af; font-size:1.5rem;">۳۲۰٬۰۰۰ تومان</p>
-                    <button>View Product</button>
+<header>
+    <div class="nav">
+        <div class="logo-text">PERIN</div>
+        <div class="nav-links">
+            <a onclick="showSection('shop')">فروشگاه</a>
+            <a onclick="openModal('loginModal')">ورود / ثبت‌نام</a>
+            <a onclick="openModal('adminModal')">پنل مدیریت</a>
+            <span class="cart-btn" onclick="openCart()">🛒 سبد (<span id="cartCount">0</span>)</span>
+        </div>
+    </div>
+</header>
+
+<section class="hero" id="home">
+    <div>
+        <img src="PERIN_Logo.png" alt="پرین" style="height:100px; margin-bottom:15px;">
+        <h1>PERIN</h1>
+        <p style="font-size:1.4rem; margin:8px 0;">Premium Fashion</p>
+        <p style="margin-bottom:30px;">Designed for Modern Lifestyle</p>
+        <button class="btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
+    </div>
+</section>
+
+<div class="filters">
+    <div class="filters-inner">
+        <input type="text" id="searchInput" placeholder="جستجوی محصول..." oninput="filterProducts()">
+        <select id="categoryFilter" onchange="filterProducts()">
+            <option value="">همه دسته‌ها</option>
+            <option value="مردانه">مردانه</option>
+            <option value="زنانه">زنانه</option>
+            <option value="زمستانی">زمستانی</option>
+        </select>
+        <select id="priceFilter" onchange="filterProducts()">
+            <option value="999999999">همه قیمت‌ها</option>
+            <option value="400000">تا ۴۰۰ هزار</option>
+            <option value="600000">تا ۶۰۰ هزار</option>
+            <option value="1000000">تا ۱ میلیون</option>
+        </select>
+    </div>
+</div>
+
+<section class="section" id="products" style="background:white;">
+    <h2 class="section-title">محصولات</h2>
+    <div class="product-grid" id="productGrid"></div>
+</section>
+
+<footer>
+    <p style="font-size:1.2rem; margin-bottom:15px;">Instagram • Telegram • Facebook</p>
+    <p>Email: info@perin.shop | ۰۹۰۵۰۸۹۱۸۱۷</p>
+    <p>© 2026 PERIN. All Rights Reserved.</p>
+    <p>Designed & Developed by Amirreza Zare</p>
+</footer>
+
+<div class="modal" id="cartModal">
+    <div class="modal-content">
+        <h2>سبد خرید</h2>
+        <div id="cartItems"></div>
+        <h3 id="cartTotal" style="margin:20px 0; color:#1e40af;"></h3>
+        <button class="btn" style="width:100%; margin-bottom:10px;" onclick="checkout()">پرداخت آنلاین</button>
+        <button class="btn" style="width:100%; background:#6b7280;" onclick="closeModal('cartModal')">بستن</button>
+    </div>
+</div>
+
+<div class="modal" id="loginModal">
+    <div class="modal-content">
+        <h2>ورود / ثبت‌نام</h2>
+        <input type="text" id="userName" placeholder="نام کاربری یا ایمیل">
+        <input type="password" id="userPass" placeholder="رمز عبور">
+        <button class="btn" style="width:100%; margin-bottom:10px;" onclick="doLogin()">ورود</button>
+        <button class="btn" style="width:100%; background:#10b981;" onclick="doRegister()">ثبت‌نام</button>
+        <button class="btn" style="width:100%; background:#6b7280; margin-top:10px;" onclick="closeModal('loginModal')">بستن</button>
+    </div>
+</div>
+
+<div class="modal" id="adminModal">
+    <div class="modal-content">
+        <h2>پنل مدیریت (دمو)</h2>
+        <p style="margin:15px 0;"><strong>سفارش‌های امروز:</strong> ۱۲ عدد</p>
+        <p><strong>درآمد امروز:</strong> ۴٬۸۵۰٬۰۰۰ تومان</p>
+        <p style="margin:15px 0;"><strong>موجودی انبار:</strong> ۲۳۴ عدد</p>
+        <p style="color:#6b7280; font-size:0.9rem; margin-top:20px;">این پنل فقط نمایشی است. برای پنل واقعی نیاز به هاست و دیتابیس دارید.</p>
+        <button class="btn" style="width:100%; background:#6b7280; margin-top:20px;" onclick="closeModal('adminModal')">بستن</button>
+    </div>
+</div>
+
+<script>
+    const products = [
+        {id:1, name:"تی‌شرت مشکی Premium", price:320000, category:"مردانه", img:"https://picsum.photos/id/1015/600/400"},
+        {id:2, name:"شلوار جین سفید", price:650000, category:"مردانه", img:"https://picsum.photos/id/1020/600/400"},
+        {id:3, name:"هودی مشکی زمستانی", price:580000, category:"زمستانی", img:"https://picsum.photos/id/106/600/400"},
+        {id:4, name:"پیراهن سفید مردانه", price:450000, category:"مردانه", img:"https://picsum.photos/id/201/600/400"},
+        {id:5, name:"بلوز زنانه سفید", price:390000, category:"زنانه", img:"https://picsum.photos/id/64/600/400"},
+        {id:6, name:"سویشرت مشکی", price:520000, category:"زمستانی", img:"https://picsum.photos/id/251/600/400"},
+        {id:7, name:"تی‌شرت سفید اسپرت", price:280000, category:"زنانه", img:"https://picsum.photos/id/180/600/400"},
+        {id:8, name:"جین بگ مردانه", price:720000, category:"مردانه", img:"https://picsum.photos/id/133/600/400"}
+    ];
+
+    let cart = JSON.parse(localStorage.getItem('perinCart')) || [];
+
+    function renderProducts(list = products) {
+        const grid = document.getElementById('productGrid');
+        grid.innerHTML = '';
+        if(list.length === 0) {
+            grid.innerHTML = '<p style="text-align:center; grid-column:1/-1;">محصولی یافت نشد</p>';
+            return;
+        }
+        list.forEach(p => {
+            grid.innerHTML += `
+                <div class="product-card">
+                    <img src="${p.img}" class="product-img" alt="${p.name}">
+                    <div class="product-info">
+                        <h3>${p.name}</h3>
+                        <div class="price">${p.price.toLocaleString('fa-IR')} تومان</div>
+                        <button class="btn" style="width:100%;" onclick="addToCart(${p.id})">افزودن به سبد</button>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            `;
+        });
+    }
 
-    <!-- Footer -->
-    <footer>
-        <p style="font-size:1.6rem;">Instagram • Telegram • Facebook • Pinterest</p>
-        <p>Email: info@perin.shop | Phone: ۰۹۰۵۰۸۹۱۸۱۷</p>
-        <p>© 2026 PERIN. All Rights Reserved.</p>
-        <p>Designed & Developed by Amirreza Zare</p>
-    </footer>
+    function filterProducts() {
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        const category = document.getElementById('categoryFilter').value;
+        const maxPrice = parseInt(document.getElementById('priceFilter').value);
+
+        const filtered = products.filter(p => {
+            return p.name.toLowerCase().includes(search) &&
+                   (!category || p.category === category) &&
+                   p.price <= maxPrice;
+        });
+        renderProducts(filtered);
+    }
+
+    function addToCart(id) {
+        const product = products.find(p => p.id === id);
+        cart.push(product);
+        localStorage.setItem('perinCart', JSON.stringify(cart));
+        updateCartCount();
+        alert(product.name + ' به سبد اضافه شد ✅');
+    }
+
+    function updateCartCount() {
+        document.getElementById('cartCount').textContent = cart.length;
+    }
+
+    function openCart() {
+        const itemsDiv = document.getElementById('cartItems');
+        let total = 0;
+        let html = '';
+        cart.forEach((item, i) => {
+            total += item.price;
+            html += `
+                <div class="cart-item">
+                    <span>${item.name}</span>
+                    <span>${item.price.toLocaleString('fa-IR')} ت 
+                        <button class="remove-btn" onclick="removeFromCart(${i})">حذف</button>
+                    </span>
+                </div>
+            `;
+        });
+        itemsDiv.innerHTML = html || '<p>سبد خرید خالی است</p>';
+        document.getElementById('cartTotal').textContent = 'مجموع: ' + total.toLocaleString('fa-IR') + ' تومان';
+        openModal('cartModal');
+    }
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        localStorage.setItem('perinCart', JSON.stringify(cart));
+        updateCartCount();
+        openCart();
+    }
+
+    function checkout() {
+        if(cart.length === 0) return alert('سبد خرید خالی است');
+        alert('✅ در حال اتصال به درگاه پرداخت...\n(این بخش شبیه‌سازی است)');
+        cart = [];
+        localStorage.setItem('perinCart', JSON.stringify(cart));
+        updateCartCount();
+        closeModal('cartModal');
+    }
+
+    function doLogin() {
+        const name = document.getElementById('userName').value;
+        if(!name) return alert('نام کاربری را وارد کنید');
+        alert('خوش آمدید ' + name + '!');
+        closeModal('loginModal');
+    }
+
+    function doRegister() {
+        const name = document.getElementById('userName').value;
+        if(!name) return alert('نام کاربری را وارد کنید');
+        alert('ثبت‌نام با موفقیت انجام شد!');
+        closeModal('loginModal');
+    }
+
+    function openModal(id) {
+        document.getElementById(id).style.display = 'flex';
+    }
+    function closeModal(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+
+    renderProducts();
+    updateCartCount();
+</script>
 </body>
 </html>
